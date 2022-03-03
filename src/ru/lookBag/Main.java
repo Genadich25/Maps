@@ -1,14 +1,11 @@
 package ru.lookBag;
 
-import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class Main {
 
     public static void main(String[] args) {
-        List<Integer> nums = new ArrayList(List.of(1, 1, 2, 3, 4, 4, 5, 5, 6, 7));
+        List<Integer> nums = new ArrayList(List.of(1, 1, 4, 3, 4, 2, 5, 5, 6, 7));
         List<String> strings = new ArrayList(List.of("кот", "дом", "кот", "окно", "солнце", "окно", "кот"));
         printOddNumbers(nums);
         printEvenNumbersNoDouble(nums);
@@ -20,20 +17,15 @@ public class Main {
         List<Integer> oddNumbers = new ArrayList();
 
         for (int i = 0; i < nums.size(); ++i) {
-            if ((Integer) nums.get(i) % 2 == 1) {
-                oddNumbers.add((Integer) nums.get(i));
+            if ( nums.get(i) % 2 == 1) {
+                oddNumbers.add(nums.get(i));
             }
         }
-
         if (!oddNumbers.isEmpty()) {
             System.out.println("Все нечетные числа в списке:");
-            Iterator var4 = oddNumbers.iterator();
-
-            while (var4.hasNext()) {
-                Integer oddNumber = (Integer) var4.next();
-                System.out.print(oddNumber + " ");
+            for (int i = 0; i < oddNumbers.size(); ++i) {
+                System.out.print(oddNumbers.get(i) + " ");
             }
-
             System.out.println();
             System.out.println();
         } else {
@@ -44,26 +36,20 @@ public class Main {
     }
 
     public static void printEvenNumbersNoDouble(List<Integer> nums) {
-        List<Integer> evenNumbers = new ArrayList();
-        Iterator var2 = nums.iterator();
-
-        Integer evenNumber;
-        while (var2.hasNext()) {
-            evenNumber = (Integer) var2.next();
-            if (evenNumber % 2 == 0 && !evenNumbers.contains(evenNumber)) {
-                evenNumbers.add(evenNumber);
+        Set<Integer> evenNumbers = new TreeSet<>();
+        for (int i = 0; i < nums.size(); ++i) {
+            if (nums.get(i) % 2 == 0 && !evenNumbers.contains(nums.get(i))) {
+                evenNumbers.add(nums.get(i));
             }
         }
 
         if (!evenNumbers.isEmpty()) {
-            System.out.println("Все четные числа в списке без повторений:");
-            var2 = evenNumbers.iterator();
-
-            while (var2.hasNext()) {
-                evenNumber = (Integer) var2.next();
-                System.out.print(evenNumber + " ");
-            }
-
+            System.out.println("Все четные числа в списке в порядке возрастания:");
+            String evenNumber = evenNumbers.toString();
+            evenNumber = evenNumber.replace("[","");
+            evenNumber = evenNumber.replace("]","");
+            evenNumber = evenNumber.replace(",","");
+            System.out.print(evenNumber);
             System.out.println();
             System.out.println();
         } else {
@@ -76,20 +62,16 @@ public class Main {
     public static void printUniqueString(List<String> strings) {
         List<String> uniqueStrings = new ArrayList();
 
-        int i;
-        for (i = 0; i < strings.size(); ++i) {
+        for (int i = 0; i < strings.size(); ++i) {
             if (!uniqueStrings.contains(strings.get(i))) {
-                uniqueStrings.add((String) strings.get(i));
+                uniqueStrings.add(strings.get(i));
             }
         }
 
         if (!uniqueStrings.isEmpty()) {
             System.out.println("Все уникальные строки в списке:");
-
-            for (i = 0; i < uniqueStrings.size(); ++i) {
-                PrintStream var10000 = System.out;
-                Object var10001 = uniqueStrings.get(i);
-                var10000.print((String) var10001 + " ");
+            for (int i = 0; i < uniqueStrings.size(); ++i) {
+                System.out.print(uniqueStrings.get(i) + " ");
             }
 
             System.out.println();
@@ -115,9 +97,7 @@ public class Main {
             }
 
             if (count > 1) {
-                PrintStream var10000 = System.out;
-                String var10001 = (String) strings.get(i);
-                var10000.println(var10001 + " повторяется " + count + " раза");
+                System.out.println(strings.get(i) + " повторяется " + count + " раза");
                 ++globalCount;
             }
 
